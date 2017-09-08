@@ -6,7 +6,7 @@ public class ControllerGrabObject : MonoBehaviour {
 
 
 	private const string CLOCK_TAG = "Clock";
-	private bool clockRotate = false;
+	public static bool clockRotate = false;
 	private SteamVR_TrackedObject trackedObj;
 	private Quaternion currentMinQ;
 	private Quaternion firstMinQ;
@@ -34,6 +34,7 @@ public class ControllerGrabObject : MonoBehaviour {
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
 		hourPiv = GetComponent<GameObject> ();
 		minPiv = GetComponent<GameObject> ();
+        
 	}
 
 	private void SetCollidingObject(Collider col)
@@ -109,6 +110,7 @@ public class ControllerGrabObject : MonoBehaviour {
 
 	IEnumerator startRotate(Quaternion currentMinRotation, Quaternion currentHourRotation)
 	{
+
 		Quaternion controllerQ = trackedObj.transform.rotation;
 		Quaternion minTargetRotation = Quaternion.Euler(controllerQ.x - currentMinRotation.x, controllerQ.y - currentMinRotation.y, controllerQ.z - currentMinRotation.z);
 		Quaternion hourTargetRotation = Quaternion.Euler ((controllerQ.x - currentMinRotation.x) / 12, (controllerQ.y - currentMinRotation.y) / 12, (controllerQ.z - currentMinRotation.z) / 12);
