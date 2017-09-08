@@ -15,11 +15,10 @@ public class ControllerGrabObject : MonoBehaviour {
 	public float speed = 1.0f;
 	private bool initialRotate = false;
 
-	[SerializeField]
-	private GameObject hourPiv;
 
-	[SerializeField]
-	private GameObject minPiv;
+	//public GameObject hourPiv;
+
+	//public GameObject minPiv;
 
 	private GameObject collidingObject;
 	private GameObject objectInHand;
@@ -32,8 +31,8 @@ public class ControllerGrabObject : MonoBehaviour {
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
-		hourPiv = GetComponent<GameObject> ();
-		minPiv = GetComponent<GameObject> ();
+		//hourPiv = GetComponent<GameObject> ();
+		//minPiv = GetComponent<GameObject> ();
         
 	}
 
@@ -57,20 +56,24 @@ public class ControllerGrabObject : MonoBehaviour {
 			if (collidingObject) {
 				GrabObject ();
 			}
+            else {
+                GameObject vr = GameObject.FindGameObjectWithTag("player");
+                vr.transform.position = new Vector3(5f, 0f, 0f);
+            }
 
-			if (clockRotate) 
-			{	
-				currentHourQ = hourPiv.transform.rotation;
-				currentMinQ = minPiv.transform.rotation;
-				if (!initialRotate) 
-				{
-					firstMinQ = currentMinQ;
-					firstHourQ = currentHourQ;	
-					initialRotate = true;
-				}
+			//if (clockRotate) 
+			//{	
+			//	currentHourQ = hourPiv.transform.rotation;
+			//	currentMinQ = minPiv.transform.rotation;
+			//	if (!initialRotate) 
+			//	{
+			//		firstMinQ = currentMinQ;
+			//		firstHourQ = currentHourQ;	
+			//		initialRotate = true;
+			//	}
 
-				StartCoroutine(startRotate (currentMinQ, currentHourQ));
-			}
+			//	StartCoroutine(startRotate (currentMinQ, currentHourQ));
+			//}
 				
 		}
 
@@ -79,11 +82,11 @@ public class ControllerGrabObject : MonoBehaviour {
 				ReleaseObject ();
 			}
 
-			if (clockRotate) 
-			{
-				StartCoroutine (releaseRotate ());
-				clockRotate = false;
-			}
+			//if (clockRotate) 
+			//{
+			//	StartCoroutine (releaseRotate ());
+			//	clockRotate = false;
+			//}
 		}
 	}
 
@@ -108,38 +111,38 @@ public class ControllerGrabObject : MonoBehaviour {
 	}
 
 
-	IEnumerator startRotate(Quaternion currentMinRotation, Quaternion currentHourRotation)
-	{
+	//IEnumerator startRotate(Quaternion currentMinRotation, Quaternion currentHourRotation)
+	//{
 
-		Quaternion controllerQ = trackedObj.transform.rotation;
-		Quaternion minTargetRotation = Quaternion.Euler(controllerQ.x - currentMinRotation.x, controllerQ.y - currentMinRotation.y, controllerQ.z - currentMinRotation.z);
-		Quaternion hourTargetRotation = Quaternion.Euler ((controllerQ.x - currentMinRotation.x) / 12, (controllerQ.y - currentMinRotation.y) / 12, (controllerQ.z - currentMinRotation.z) / 12);
-		minPiv.transform.rotation = Quaternion.Lerp (currentMinRotation, minTargetRotation, Time.deltaTime * speed);
-		hourPiv.transform.rotation = Quaternion.Lerp (currentHourRotation, hourTargetRotation, Time.deltaTime * speed);
-		currentMinQ = controllerQ;
+	//	Quaternion controllerQ = trackedObj.transform.rotation;
+	//	Quaternion minTargetRotation = Quaternion.Euler(controllerQ.x - currentMinRotation.x, controllerQ.y - currentMinRotation.y, controllerQ.z - currentMinRotation.z);
+	//	Quaternion hourTargetRotation = Quaternion.Euler ((controllerQ.x - currentMinRotation.x) / 12, (controllerQ.y - currentMinRotation.y) / 12, (controllerQ.z - currentMinRotation.z) / 12);
+	//	minPiv.transform.rotation = Quaternion.Lerp (currentMinRotation, minTargetRotation, Time.deltaTime * speed);
+	//	hourPiv.transform.rotation = Quaternion.Lerp (currentHourRotation, hourTargetRotation, Time.deltaTime * speed);
+	//	currentMinQ = controllerQ;
 
-		yield return 0;
+	//	yield return 0;
 
-	}
+	//}
 
-	IEnumerator releaseRotate()
-	{
-		initialRotate = false;
-		Quaternion lastQ = trackedObj.transform.rotation;
-		if (lastQ.x - firstMinQ.x > 180) {
-			minPiv.transform.rotation = Quaternion.Lerp (minPiv.transform.rotation, firstMinQ, Time.deltaTime * speed);
-			hourPiv.transform.rotation = Quaternion.Lerp (hourPiv.transform.rotation, firstHourQ, Time.deltaTime * speed);
+	//IEnumerator releaseRotate()
+	//{
+	//	initialRotate = false;
+	//	Quaternion lastQ = trackedObj.transform.rotation;
+	//	if (lastQ.x - firstMinQ.x > 180) {
+	//		minPiv.transform.rotation = Quaternion.Lerp (minPiv.transform.rotation, firstMinQ, Time.deltaTime * speed);
+	//		hourPiv.transform.rotation = Quaternion.Lerp (hourPiv.transform.rotation, firstHourQ, Time.deltaTime * speed);
 
-		} else 
-		{
-			Quaternion minTargetRotation = Quaternion.Euler (-360, -360, -360);
-			Quaternion hourTargetRotation = Quaternion.Euler (firstHourQ.x - 30, firstHourQ.y, firstHourQ.z);
-			minPiv.transform.rotation = Quaternion.Lerp (minPiv.transform.rotation, minTargetRotation, Time.deltaTime * speed);
-			hourPiv.transform.rotation = Quaternion.Lerp (hourPiv.transform.rotation, hourTargetRotation, Time.deltaTime * speed);
-		}
+	//	} else 
+	//	{
+	//		Quaternion minTargetRotation = Quaternion.Euler (-360, -360, -360);
+	//		Quaternion hourTargetRotation = Quaternion.Euler (firstHourQ.x - 30, firstHourQ.y, firstHourQ.z);
+	//		minPiv.transform.rotation = Quaternion.Lerp (minPiv.transform.rotation, minTargetRotation, Time.deltaTime * speed);
+	//		hourPiv.transform.rotation = Quaternion.Lerp (hourPiv.transform.rotation, hourTargetRotation, Time.deltaTime * speed);
+	//	}
 
-		yield return 0;
-	}
+	//	yield return 0;
+	//}
 
 	private void GrabObject()
 	{
