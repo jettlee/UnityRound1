@@ -8,47 +8,55 @@ public class clockRotateScript : MonoBehaviour {
     private const string HAND_TAG = "Hand";
     public GameObject hourPiv;
     public GameObject minPiv;
-    public static bool clockRotate = false;
     private bool initialRotate = false;
-    public GameObject trackedObj;
+    private bool clockRotate = false;
+    private float startTime = 0f;
+    public float rotateTime = 0.5f;
+    private float angleTotal = 0f;
+
 
     private Quaternion firstMin;
     private Quaternion firstHour;
-    private Transform firstController;
-    private Transform currentMin;
-    private Transform currentHour;
-    private Transform prevController;
+    private Vector2 firstController;
+    private Vector2 prevController;
 
     public float speed = 1.0f;
 
 
+
     // Update is called once per frame
     void Update () {
-
-        if (clockRotate && ControllerGrabObject.hasTrigger)
+        if (clockRotate && ViveControllerInputTest.controllerInput != Vector2.zero)
         {
+
             if (!initialRotate)
             {
                 firstMin = minPiv.transform.rotation;
                 firstHour = hourPiv.transform.rotation;
-                firstController = trackedObj.transform;
+                firstController = ViveControllerInputTest.controllerInput;
                 initialRotate = true;
                 prevController = firstController;
             }
-            
-            Transform currentController = trackedObj.transform;
-            Vector3 target = currentController.position - prevController.position;
-            target.x = 0;
-            float angle = Vector3.Angle(target, transform.forward);
-            minPiv.transform.Rotate(angle, 0, 0);
-            hourPiv.transform.Rotate(angle / 12, 0, 0);
-            prevController = currentController;
+
+            float currentTime = startTime + Time.deltaTime;
+            if(currentTime >= rotateTime)
+            {
+                Vector2 currentController = ViveControllerInputTest.controllerInput;
+                float angle = Vector2.Angle(prevController, currentController);
+                if (firstHour.x + angle > -60 && firstHour.x + angle < 30)
+                {
+                    minPiv.transform.Rotate(angle, 0, 0);
+                    hourPiv.transform.Rotate(angle / 12, 0, 0);
+                    angleTotal += angle;
+                }
+                prevController = currentController;
+                currentTime = 0f;
+            }
         }
 
-        if (clockRotate && ControllerGrabObject.hasTrigger)
+        if (clockRotate && ViveControllerInputTest.controllerInput == Vector2.zero)
         {
             releaseRotate(firstController, firstHour, firstMin);
-            clockRotate = false;
         }
 	}
 
@@ -66,26 +74,20 @@ public class clockRotateScript : MonoBehaviour {
         }
     }
 
-    private void releaseRotate(Transform fitstController, Quaternion firstHour, Quaternion firstMin)
+    private void releaseRotate(Vector2 fitstController, Quaternion firstHour, Quaternion firstMin)
     {
-        Transform currentController = trackedObj.transform;
-        Vector3 target = currentController.position - firstController.position;
-        target.x = 0;
-        float angle = Vector3.Angle(target, transform.forward);
-        if (angle >= 180)
+        if (angleTotal >= 180)
         {
-            Quaternion targetAngleMin = minPiv.transform.rotation;
-            Quaternion targetAngleHour = targetAngleMin;
-            targetAngleMin.x = angle - 180;
-            targetAngleHour.x = (angle - 180) / 12;
-            minPiv.transform.rotation = Quaternion.Lerp(minPiv.transform.rotation, targetAngleMin, speed);
-            hourPiv.transform.rotation = Quaternion.Lerp(hourPiv.transform.rotation, targetAngleHour, speed);
-
+            float finalAngle = 360 - angleTotal;
+            minPiv.transform.Rotate(finalAngle, 0, 0);
+            hourPiv.transform.Rotate(finalAngle / 12, 0, 0);
         }
         else
         {
             minPiv.transform.rotation = Quaternion.Lerp(minPiv.transform.rotation, firstMin, speed);
             hourPiv.transform.rotation = Quaternion.Lerp(hourPiv.transform.rotation, firstHour, speed);
         }
+
+        angleTotal = 0f;
     }
 }

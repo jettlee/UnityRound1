@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class ControllerGrabObject : MonoBehaviour {
 
-    public static bool hasTrigger = false;
     private const string CLOCK_TAG = "Clock";
 	private SteamVR_TrackedObject trackedObj;
-
-	private bool initialRotate = false;
-
 
 	private GameObject collidingObject;
 	private GameObject objectInHand;
@@ -38,7 +34,6 @@ public class ControllerGrabObject : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Controller.GetHairTriggerDown ()) {
-            hasTrigger = true;
 			if (collidingObject) {
 				GrabObject ();
 			}
@@ -46,7 +41,6 @@ public class ControllerGrabObject : MonoBehaviour {
 		}
 
 		if (Controller.GetHairTriggerUp ()) {
-            hasTrigger = false;
 			if (objectInHand) {
 				ReleaseObject ();
 			}
