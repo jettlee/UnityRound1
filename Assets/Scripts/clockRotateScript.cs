@@ -18,7 +18,6 @@ public class clockRotateScript : MonoBehaviour {
     private Transform currentMin;
     private Transform currentHour;
     private Transform prevController;
-    private Transform currController;
 
     public float speed = 1.0f;
 

@@ -17,11 +17,5 @@ public class SoundManager : MonoBehaviour
     void Update()
     {
 
-        if (ControllerGrabObject.clockRotate)
-        {
-            AudioClip audioClipgears = Resources.Load<AudioClip>("Clockgears");
-            audioGears.clip = audioClipgears;
-            audioGears.Play();
-        }
     }
 }
