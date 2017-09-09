@@ -15,6 +15,10 @@ public class ControllerGrabObject : MonoBehaviour {
 	public float speed = 1.0f;
 	private bool initialRotate = false;
 
+    private float px;
+
+
+
 
 	//public GameObject hourPiv;
 
@@ -31,6 +35,7 @@ public class ControllerGrabObject : MonoBehaviour {
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
+        px = GameObject.FindGameObjectWithTag("Player").transform.position.x;
 		//hourPiv = GetComponent<GameObject> ();
 		//minPiv = GetComponent<GameObject> ();
         
@@ -57,8 +62,14 @@ public class ControllerGrabObject : MonoBehaviour {
 				GrabObject ();
 			}
             else {
-                GameObject vr = GameObject.FindGameObjectWithTag("player");
-                vr.transform.position = new Vector3(5f, 0f, 0f);
+                GameObject vr = GameObject.FindGameObjectWithTag("Player");
+
+                px += 5f;
+                if (px > 5f)
+                {
+                    px = -5f;
+                }
+                vr.transform.position = new Vector3(px, 0f, 0f);
             }
 
 			//if (clockRotate) 
