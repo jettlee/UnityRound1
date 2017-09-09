@@ -48,7 +48,7 @@ public class clockRotateScript : MonoBehaviour {
             }
             
             Transform currentController = trackedObj.transform;
-            Vector3 target = currController.position - prevController.position;
+            Vector3 target = currentController.position - prevController.position;
             target.z = 0;
             float angle = Vector3.Angle(target, transform.forward);
             minPiv.transform.Rotate(angle, 0, 0);
