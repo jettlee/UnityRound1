@@ -12,8 +12,9 @@ public class Drawer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		transform.position = new Vector3(-0.02434119f,0f,
-			Mathf.Clamp(transform.position.y, -0.006F, -0.005F));
+		transform.position = new Vector3(-0.3f, 0.75f,
+			Mathf.Clamp(transform.position.z, 0.6F, 1F));
+       
 		
 	}
 }
