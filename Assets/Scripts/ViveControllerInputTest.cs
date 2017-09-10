@@ -21,10 +21,10 @@ public class ViveControllerInputTest : MonoBehaviour {
 	void Update()
 	{
         controllerInput = Controller.GetAxis();
-		//if (Controller.GetAxis()!= Vector2.zero) 
-		//{
-		//	Debug.Log (gameObject.name + Controller.GetAxis ());
-		//}
+		if (Controller.GetAxis()!= Vector2.zero) 
+		{
+		    Debug.Log (gameObject.name + Controller.GetAxis ());
+		}
 
 		//if (Controller.GetHairTriggerDown ())
 		//{

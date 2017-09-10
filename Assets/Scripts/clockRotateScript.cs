@@ -10,17 +10,19 @@ public class clockRotateScript : MonoBehaviour {
     public GameObject minPiv;
     private bool initialRotate = false;
     private bool clockRotate = false;
-    private float startTime = 0f;
-    public float rotateTime = 0.5f;
+    private float rotateTime = 0.2f;
     private float angleTotal = 0f;
+    private float currentTime = 0.0f;
 
-
-    private Quaternion firstMin;
-    private Quaternion firstHour;
+    private Vector3 currentMin;
+    private Vector3 currentHour;
+    private Vector3 firstMin;
+    private Vector3 firstHour;
     private Vector2 firstController;
     private Vector2 prevController;
 
-    public float speed = 1.0f;
+    public float minSpeed = 3.0f;
+    public float hourSpeed = 1.0f;
 
 
 
@@ -28,66 +30,65 @@ public class clockRotateScript : MonoBehaviour {
     void Update () {
         if (clockRotate && ViveControllerInputTest.controllerInput != Vector2.zero)
         {
+            Debug.Log("getAxis");
 
             if (!initialRotate)
             {
-                firstMin = minPiv.transform.rotation;
-                firstHour = hourPiv.transform.rotation;
+                firstMin = minPiv.transform.eulerAngles;
+                firstHour = hourPiv.transform.eulerAngles;
+                currentHour = firstHour;
+                currentMin = firstMin;
                 firstController = ViveControllerInputTest.controllerInput;
                 initialRotate = true;
                 prevController = firstController;
             }
 
-            float currentTime = startTime + Time.deltaTime;
+            Debug.Log("rotating");
+            currentTime = currentTime + Time.deltaTime;
+            Debug.Log(currentTime);
             if(currentTime >= rotateTime)
             {
+                Debug.Log("in rotating function");
                 Vector2 currentController = ViveControllerInputTest.controllerInput;
-                float angle = Vector2.Angle(prevController, currentController);
-                if (firstHour.x + angle > -60 && firstHour.x + angle < 30)
-                {
-                    minPiv.transform.Rotate(angle, 0, 0);
-                    hourPiv.transform.Rotate(angle / 12, 0, 0);
-                    angleTotal += angle;
-                }
-                prevController = currentController;
+                float angle = Vector2.SignedAngle(prevController, currentController);
+                Debug.Log(angle);
+                Debug.Log(currentHour.x);
+            if (currentHour.x <= 360 && currentHour.x >= 270)
+            {
+                Debug.Log("piv rotating");
+                Vector3 targetMin = new Vector3(currentMin.x + angle, 0, 0);
+                Vector3 targetHour = new Vector3(currentHour.x + angle / 12, 0, 0);
+                minPiv.transform.Rotate(targetMin);
+                hourPiv.transform.Rotate(targetHour);
+                angleTotal += angle;
                 currentTime = 0f;
+                currentMin = targetMin;
+                currentHour = targetHour;
+                
             }
-        }
-
-        if (clockRotate && ViveControllerInputTest.controllerInput == Vector2.zero)
-        {
-            releaseRotate(firstController, firstHour, firstMin);
+                prevController = currentController;
+            
+            }
         }
 	}
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == HAND_TAG)
         {
             clockRotate = true;
         }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
         if (other.gameObject.tag == HAND_TAG)
         {
             clockRotate = false;
             initialRotate = false;
+            minPiv.transform.eulerAngles = Vector3.Lerp(minPiv.transform.eulerAngles, firstMin, minSpeed * Time.deltaTime);
+            hourPiv.transform.eulerAngles = Vector3.Lerp(hourPiv.transform.eulerAngles, firstHour, hourSpeed * Time.deltaTime);
+            angleTotal = 0f;
         }
-    }
-
-    private void releaseRotate(Vector2 fitstController, Quaternion firstHour, Quaternion firstMin)
-    {
-        if (angleTotal >= 180)
-        {
-            float finalAngle = 360 - angleTotal;
-            minPiv.transform.Rotate(finalAngle, 0, 0);
-            hourPiv.transform.Rotate(finalAngle / 12, 0, 0);
-        }
-        else
-        {
-            minPiv.transform.rotation = Quaternion.Lerp(minPiv.transform.rotation, firstMin, speed);
-            hourPiv.transform.rotation = Quaternion.Lerp(hourPiv.transform.rotation, firstHour, speed);
-        }
-
-        angleTotal = 0f;
     }
 }
