@@ -30,13 +30,13 @@ public class ControllerGrabObject : MonoBehaviour {
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
-		player = GameObject.FindGameObjectWithTag ("Player");
+		player = GameObject.Find("VR");
 		px = player.transform.position.x;
 	}
 
 	private void SetCollidingObject(Collider col)
 	{	
-		if (collidingObject || !col.GetComponent<Rigidbody> ())
+		if (collidingObject || !col.GetComponent<Rigidbody> () || col.tag != "Key")
 		{
 			return;
 		}
@@ -49,15 +49,14 @@ public class ControllerGrabObject : MonoBehaviour {
 				GrabObject ();
 			}
             else {
-                GameObject vr = GameObject.FindGameObjectWithTag("Player");
-
+              
                 px += 5f;
                 if (px > 5f)
                 {
                     px = -5f;
                 }
 
-                vr.transform.position = new Vector3(px, 0f, 0f);
+				player.transform.position = new Vector3(px, 0f, 0f);
             }
 		}
 
@@ -93,7 +92,7 @@ public class ControllerGrabObject : MonoBehaviour {
 	{
 		objectInHand = collidingObject;
 		//set objectinhand parent to player
-		objectInHand.transform.parent = player;
+		objectInHand.transform.parent = player.transform;
 		collidingObject = null;
 
 		var joint = AddFixedJoint ();

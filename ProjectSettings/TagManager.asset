@@ -7,6 +7,7 @@ TagManager:
   - Clock
   - projectile
   - FxTemporaire
+  - Key
   layers:
   - Default
   - TransparentFX
