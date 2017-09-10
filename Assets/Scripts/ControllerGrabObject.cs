@@ -15,14 +15,9 @@ public class ControllerGrabObject : MonoBehaviour {
 	public float speed = 1.0f;
 	private bool initialRotate = false;
 
+	private GameObject player;
     private float px;
 
-
-
-
-	//public GameObject hourPiv;
-
-	//public GameObject minPiv;
 
 	private GameObject collidingObject;
 	private GameObject objectInHand;
@@ -35,27 +30,19 @@ public class ControllerGrabObject : MonoBehaviour {
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
-        px = GameObject.FindGameObjectWithTag("Player").transform.position.x;
-		//hourPiv = GetComponent<GameObject> ();
-		//minPiv = GetComponent<GameObject> ();
-        
+		player = GameObject.FindGameObjectWithTag ("Player");
+		px = player.transform.position.x;
 	}
 
 	private void SetCollidingObject(Collider col)
 	{	
-		if (col.tag == CLOCK_TAG) 
-		{
-			clockRotate = true;
-		}
-		if (collidingObject || !col.GetComponent<Rigidbody> () || col.tag == CLOCK_TAG)
+		if (collidingObject || !col.GetComponent<Rigidbody> ())
 		{
 			return;
 		}
-
 		collidingObject = col.gameObject;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (Controller.GetHairTriggerDown ()) {
 			if (collidingObject) {
@@ -69,35 +56,16 @@ public class ControllerGrabObject : MonoBehaviour {
                 {
                     px = -5f;
                 }
+
                 vr.transform.position = new Vector3(px, 0f, 0f);
             }
-
-			//if (clockRotate) 
-			//{	
-			//	currentHourQ = hourPiv.transform.rotation;
-			//	currentMinQ = minPiv.transform.rotation;
-			//	if (!initialRotate) 
-			//	{
-			//		firstMinQ = currentMinQ;
-			//		firstHourQ = currentHourQ;	
-			//		initialRotate = true;
-			//	}
-
-			//	StartCoroutine(startRotate (currentMinQ, currentHourQ));
-			//}
-				
 		}
 
 		if (Controller.GetHairTriggerUp ()) {
 			if (objectInHand) {
 				ReleaseObject ();
 			}
-
-			//if (clockRotate) 
-			//{
-			//	StartCoroutine (releaseRotate ());
-			//	clockRotate = false;
-			//}
+		
 		}
 	}
 
@@ -121,43 +89,11 @@ public class ControllerGrabObject : MonoBehaviour {
 		collidingObject = null;
 	}
 
-
-	//IEnumerator startRotate(Quaternion currentMinRotation, Quaternion currentHourRotation)
-	//{
-
-	//	Quaternion controllerQ = trackedObj.transform.rotation;
-	//	Quaternion minTargetRotation = Quaternion.Euler(controllerQ.x - currentMinRotation.x, controllerQ.y - currentMinRotation.y, controllerQ.z - currentMinRotation.z);
-	//	Quaternion hourTargetRotation = Quaternion.Euler ((controllerQ.x - currentMinRotation.x) / 12, (controllerQ.y - currentMinRotation.y) / 12, (controllerQ.z - currentMinRotation.z) / 12);
-	//	minPiv.transform.rotation = Quaternion.Lerp (currentMinRotation, minTargetRotation, Time.deltaTime * speed);
-	//	hourPiv.transform.rotation = Quaternion.Lerp (currentHourRotation, hourTargetRotation, Time.deltaTime * speed);
-	//	currentMinQ = controllerQ;
-
-	//	yield return 0;
-
-	//}
-
-	//IEnumerator releaseRotate()
-	//{
-	//	initialRotate = false;
-	//	Quaternion lastQ = trackedObj.transform.rotation;
-	//	if (lastQ.x - firstMinQ.x > 180) {
-	//		minPiv.transform.rotation = Quaternion.Lerp (minPiv.transform.rotation, firstMinQ, Time.deltaTime * speed);
-	//		hourPiv.transform.rotation = Quaternion.Lerp (hourPiv.transform.rotation, firstHourQ, Time.deltaTime * speed);
-
-	//	} else 
-	//	{
-	//		Quaternion minTargetRotation = Quaternion.Euler (-360, -360, -360);
-	//		Quaternion hourTargetRotation = Quaternion.Euler (firstHourQ.x - 30, firstHourQ.y, firstHourQ.z);
-	//		minPiv.transform.rotation = Quaternion.Lerp (minPiv.transform.rotation, minTargetRotation, Time.deltaTime * speed);
-	//		hourPiv.transform.rotation = Quaternion.Lerp (hourPiv.transform.rotation, hourTargetRotation, Time.deltaTime * speed);
-	//	}
-
-	//	yield return 0;
-	//}
-
 	private void GrabObject()
 	{
 		objectInHand = collidingObject;
+		//set objectinhand parent to player
+		objectInHand.transform.parent = player;
 		collidingObject = null;
 
 		var joint = AddFixedJoint ();
@@ -183,6 +119,8 @@ public class ControllerGrabObject : MonoBehaviour {
 			objectInHand.GetComponent<Rigidbody> ().angularVelocity = Controller.angularVelocity;
 		}
 
+		//detach from parent
+		objectInHand.transform.parent = null;
 		objectInHand = null;
 	}
 		
