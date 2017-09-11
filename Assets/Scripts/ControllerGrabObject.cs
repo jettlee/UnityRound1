@@ -16,7 +16,7 @@ public class ControllerGrabObject : MonoBehaviour {
 	private bool initialRotate = false;
 
 	private GameObject player;
-    private float px;
+//    private float px;
 
 
 	private GameObject collidingObject;
@@ -31,7 +31,7 @@ public class ControllerGrabObject : MonoBehaviour {
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
 		player = GameObject.Find("VR");
-		px = player.transform.position.x;
+//		px = player.transform.position.x;
 	}
 
 	private void SetCollidingObject(Collider col)
@@ -48,16 +48,16 @@ public class ControllerGrabObject : MonoBehaviour {
 			if (collidingObject) {
 				GrabObject ();
 			}
-            else {
-              
-                px += 5f;
-                if (px > 5f)
-                {
-                    px = 0f;
-                }
-
-				player.transform.position = new Vector3(px, 0f, 0f);
-            }
+//            else {
+//              
+//                px += 5f;
+//                if (px > 5f)
+//                {
+//                    px = 0f;
+//                }
+//
+//				player.transform.position = new Vector3(px, 0f, 0f);
+//            }
 		}
 
 		if (Controller.GetHairTriggerUp ()) {

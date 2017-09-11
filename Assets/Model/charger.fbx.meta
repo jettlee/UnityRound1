@@ -1,15 +1,20 @@
 fileFormatVersion: 2
-guid: 7241c3942ec076b4c9a3a29e373b7bf4
-timeCreated: 1505012014
+guid: e6b07fafab45f6a4099a1f8a6aded1a1
+timeCreated: 1505081505
 licenseType: Pro
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
+    100002: charger_line
     400000: //RootNode
+    400002: charger_line
     2300000: //RootNode
+    2300002: charger_line
     3300000: //RootNode
-    4300000: charger
+    3300002: charger_line
+    4300000: charger_head
+    4300002: charger_line
     9500000: //RootNode
   materials:
     importMaterials: 1

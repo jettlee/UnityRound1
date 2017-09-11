@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class test : MonoBehaviour {
 
-    public Vector3 targetAngle;
+	Vector3 targetAngle;
 
     private Vector3 currentAngle;
     bool rotating = false;
 
-    int num = 0;
+    int num = 1;
     float speed = 10f;
 
     public void Start()
@@ -17,17 +17,26 @@ public class test : MonoBehaviour {
         currentAngle = transform.eulerAngles;
     }
 
+	public void StartRotate() {
+		//Debug.Log ("space");
+		rotating = true;
+		num += 1;
+
+		if (num > 7) {
+			num = 0;
+		}   
+
+		targetAngle = new Vector3((num-1) * 45f - 90, 0, -180);
+		Debug.Log(num);
+	}
+
     public void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rotating = true;
-            num += 1;
-           
-            targetAngle = new Vector3(num * 30f, 0, 0);
-            Debug.Log(targetAngle);
-        }
+//        if (Input.GetKeyDown(KeyCode.Space))
+//        {
+//			
+//        }
 
         if (rotating)
         {
