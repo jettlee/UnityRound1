@@ -8,10 +8,6 @@ public class clockWiseRotate : MonoBehaviour {
 	public GameObject hourHand;
 	public GameObject minHand;
 
-	public float minSpeed = 10.0f;
-	public float hourSpeed = 10.0f;
-
-
 	// Use this for initialization
 	void Start () {
 		
