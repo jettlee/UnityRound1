@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class clockRotateScript : MonoBehaviour {
 
-
     public Rigidbody minPiv;
     public GameObject hourPiv;
 
