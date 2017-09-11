@@ -53,7 +53,7 @@ public class ControllerGrabObject : MonoBehaviour {
                 px += 5f;
                 if (px > 5f)
                 {
-                    px = -5f;
+                    px = 0f;
                 }
 
 				player.transform.position = new Vector3(px, 0f, 0f);
