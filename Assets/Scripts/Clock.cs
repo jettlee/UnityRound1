@@ -44,10 +44,12 @@ public class Clock : MonoBehaviour
                     Debug.Log(px);
                     if (px > 0f)
                     {
+                        clockSound.playClockRotateSound();
                         StartCoroutine(backMinRotate());
                         StartCoroutine(backHourRotate());
                         px -= 5f;
                         Debug.Log(px);
+                        clockSound.playRoomChangeSound();
                         player.transform.position = new Vector3(px, 0f, -0.3f);
                     }
 
@@ -58,10 +60,12 @@ public class Clock : MonoBehaviour
 
                     if (px < 15f)
                     {
+                        clockSound.playClockRotateSound();
                         StartCoroutine(forMinRotate());
                         StartCoroutine(forHourRotate());
                         px += 5f;
                         Debug.Log(px);
+                        clockSound.playRoomChangeSound();
                         player.transform.position = new Vector3(px, 0f, -0.3f);
                     }
 
