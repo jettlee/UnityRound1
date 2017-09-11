@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ViveControllerInputTest : MonoBehaviour {
 
-    public static Vector2 controllerInput;
+    public static bool triggerDown = false;
 
 	private SteamVR_TrackedObject trackedObj;
 
@@ -20,11 +20,19 @@ public class ViveControllerInputTest : MonoBehaviour {
 
 	void Update()
 	{
-        controllerInput = Controller.GetAxis();
-		if (Controller.GetAxis()!= Vector2.zero) 
-		{
-		    Debug.Log (gameObject.name + Controller.GetAxis ());
-		}
+        if (Controller.GetHairTriggerDown())
+        {
+            triggerDown = true;
+        }
+
+        if (Controller.GetHairTriggerUp())
+        {
+            triggerDown = false;
+        }
+		//if (Controller.GetAxis()!= Vector2.zero) 
+		//{
+		//    Debug.Log (gameObject.name + Controller.GetAxis ());
+		//}
 
 		//if (Controller.GetHairTriggerDown ())
 		//{

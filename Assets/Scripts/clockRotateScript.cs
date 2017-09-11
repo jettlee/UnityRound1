@@ -5,90 +5,77 @@ using UnityEngine;
 public class clockRotateScript : MonoBehaviour {
 
 
-    private const string HAND_TAG = "Hand";
+    public Rigidbody minPiv;
     public GameObject hourPiv;
-    public GameObject minPiv;
-    private bool initialRotate = false;
-    private bool clockRotate = false;
-    private float rotateTime = 0.2f;
-    private float angleTotal = 0f;
-    private float currentTime = 0.0f;
 
-    private Vector3 currentMin;
-    private Vector3 currentHour;
-    private Vector3 firstMin;
-    private Vector3 firstHour;
-    private Vector2 firstController;
-    private Vector2 prevController;
+    private Vector3 currMin;
+    private Vector3 currHour;
 
-    public float minSpeed = 3.0f;
-    public float hourSpeed = 1.0f;
-
-
-
-    // Update is called once per frame
-    void Update () {
-        if (clockRotate && ViveControllerInputTest.controllerInput != Vector2.zero)
-        {
-            Debug.Log("getAxis");
-
-            if (!initialRotate)
-            {
-                firstMin = minPiv.transform.eulerAngles;
-                firstHour = hourPiv.transform.eulerAngles;
-                currentHour = firstHour;
-                currentMin = firstMin;
-                firstController = ViveControllerInputTest.controllerInput;
-                initialRotate = true;
-                prevController = firstController;
-            }
-
-            Debug.Log("rotating");
-            currentTime = currentTime + Time.deltaTime;
-            Debug.Log(currentTime);
-            if(currentTime >= rotateTime)
-            {
-                Debug.Log("in rotating function");
-                Vector2 currentController = ViveControllerInputTest.controllerInput;
-                float angle = Vector2.SignedAngle(prevController, currentController);
-                Debug.Log(angle);
-                Debug.Log(currentHour.x);
-            if (currentHour.x <= 360 && currentHour.x >= 270)
-            {
-                Debug.Log("piv rotating");
-                Vector3 targetMin = new Vector3(currentMin.x + angle, 0, 0);
-                Vector3 targetHour = new Vector3(currentHour.x + angle / 12, 0, 0);
-                minPiv.transform.Rotate(targetMin);
-                hourPiv.transform.Rotate(targetHour);
-                angleTotal += angle;
-                currentTime = 0f;
-                currentMin = targetMin;
-                currentHour = targetHour;
-                
-            }
-                prevController = currentController;
-            
-            }
-        }
-	}
-
-    private void OnTriggerStay(Collider other)
+    private void Awake()
     {
-        if (other.gameObject.tag == HAND_TAG)
-        {
-            clockRotate = true;
-        }
+        minPiv = GetComponent<Rigidbody>();
+        currHour = hourPiv.transform.eulerAngles ;
+        currMin = minPiv.transform.eulerAngles ;
+        //Debug.Log(currHour);
+        //Debug.Log(currMin);
     }
 
-    private void OnTriggerExit(Collider other)
+    // Update is called once per frame
+    void Update ()
     {
-        if (other.gameObject.tag == HAND_TAG)
+        //Debug.Log(ControllerGrabObject.rotateReset);
+        //Debug.Log("getAxis and in update");
+
+        
+        Vector3 nextMin = minPiv.transform.eulerAngles ;
+        //Debug.Log(nextMin);
+        float minPivRotationX = nextMin.x - currMin.x;
+
+        if (currHour.x - minPivRotationX / 12 > 359 || currHour.x - minPivRotationX / 12 < 300)
         {
-            clockRotate = false;
-            initialRotate = false;
-            minPiv.transform.eulerAngles = Vector3.Lerp(minPiv.transform.eulerAngles, firstMin, minSpeed * Time.deltaTime);
-            hourPiv.transform.eulerAngles = Vector3.Lerp(hourPiv.transform.eulerAngles, firstHour, hourSpeed * Time.deltaTime);
-            angleTotal = 0f;
+            //Debug.Log("boundary conditions");
+            minPiv.transform.eulerAngles = new Vector3(90, 0, 0);
+            if (Mathf.Abs(currHour.x - minPivRotationX / 12 - 0) > Mathf.Abs(currHour.x - minPivRotationX / 12 - (-60)))
+            {
+                hourPiv.transform.eulerAngles = new Vector3(300, 0, 0);  
+            }
+            else
+            {
+                hourPiv.transform.eulerAngles = new Vector3(359, 0, 0);
+            }
+        }
+        else
+        {
+            //Debug.Log("in rotating function");
+            hourPiv.transform.eulerAngles = new Vector3(currHour.x - minPivRotationX / 12, 0, 0);
+        }
+
+        currMin = nextMin;
+        currHour = hourPiv.transform.eulerAngles;
+
+        if (ControllerGrabObject.rotateReset)
+        {
+            Debug.Log("doing");
+            //ControllerGrabObject.rotateReset = false;
+            minPiv.transform.eulerAngles = new Vector3(90, 0, 0);
+            /*
+            float hourFinalAngle;
+            float hourTarget = Mathf.Min(Mathf.Abs(currHour.x - 359), Mathf.Abs(currHour.x - 330), Mathf.Abs(currHour.x - 300));
+            if (hourTarget == Mathf.Abs(currHour.x - 0))
+            {
+                hourFinalAngle = 359;
+            }
+            else if (hourTarget == Mathf.Abs(currHour.x - 330))
+            {
+                hourFinalAngle = 330;
+            }
+            else
+            {
+                hourFinalAngle = 300;
+            }
+            ***/
+            //hourPiv.transform.eulerAngles = new Vector3(hourFinalAngle, 0, 0);
+            ControllerGrabObject.rotateReset = false;
         }
     }
 }

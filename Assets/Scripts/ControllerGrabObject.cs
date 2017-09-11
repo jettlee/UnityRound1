@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ControllerGrabObject : MonoBehaviour {
 
-    private const string CLOCK_TAG = "Clock";
 	private SteamVR_TrackedObject trackedObj;
 
+    public static bool rotateReset = false;
 	private GameObject collidingObject;
 	private GameObject objectInHand;
 
@@ -23,7 +23,7 @@ public class ControllerGrabObject : MonoBehaviour {
 	private void SetCollidingObject(Collider col)
 	{	
 	
-		if (collidingObject || !col.GetComponent<Rigidbody> () || col.tag == CLOCK_TAG)
+		if (collidingObject || !col.GetComponent<Rigidbody> ())
 		{
 			return;
 		}
@@ -43,6 +43,7 @@ public class ControllerGrabObject : MonoBehaviour {
 		if (Controller.GetHairTriggerUp ()) {
 			if (objectInHand) {
 				ReleaseObject ();
+                rotateReset = true;
 			}
 		}
 	}
@@ -92,8 +93,8 @@ public class ControllerGrabObject : MonoBehaviour {
 			GetComponent<FixedJoint> ().connectedBody = null;
 			Destroy (GetComponent<FixedJoint> ());
 
-			objectInHand.GetComponent<Rigidbody> ().velocity = Controller.velocity;
-			objectInHand.GetComponent<Rigidbody> ().angularVelocity = Controller.angularVelocity;
+            objectInHand.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            objectInHand.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
 		}
 
 		objectInHand = null;
