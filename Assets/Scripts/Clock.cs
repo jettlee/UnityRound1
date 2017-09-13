@@ -58,7 +58,7 @@ public class Clock : MonoBehaviour
                 { //forward
                     Debug.Log("for");
 
-                    if (px < 15f)
+                    if (px < 20f)
                     {
                         clockSound.playClockRotateSound();
                         StartCoroutine(forMinRotate());
