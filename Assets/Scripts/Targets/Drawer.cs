@@ -10,9 +10,9 @@ public class Drawer : MonoBehaviour {
 
 	void Update () {
 		if (isLocked) {
-			transform.position = new Vector3 (5.31041f, 0.7175128f, 1.316191f);
+			transform.position = new Vector3 (transform.position.x, transform.position.y, 1.316191f);
 		} else {
-			transform.position = new Vector3(5.31041f,0.7175128f,Mathf.Clamp(transform.position.z, min, max));
+			transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(transform.position.z, min, max));
 		}
 			
 	}

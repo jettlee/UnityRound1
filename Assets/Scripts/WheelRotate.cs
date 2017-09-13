@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class WheelRotate : MonoBehaviour {
 
-    public int current_number;
-    //private int go_number;
-    public float speed = 0.1F;
+
+    public test w1;
+    public test w2;
+    public test w3;
+
 
     private SteamVR_TrackedObject trackedObj;
 
@@ -18,7 +20,7 @@ public class WheelRotate : MonoBehaviour {
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
-        //go_number = current_number;
+       
     }
 	
 	//// Update is called once per frame
@@ -30,14 +32,17 @@ public class WheelRotate : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.name == "Controller (right)" && Controller.GetHairTriggerDown())
+        if(other.gameObject.name == "wheel1" && Controller.GetHairTriggerDown())
         {
-
-            current_number += 1;
-            if(current_number > 7)
-            {
-                current_number = 0;
-            }
+            w1.StartRotate();
+        }
+        if (other.gameObject.name == "wheel2" && Controller.GetHairTriggerDown())
+        {
+            w2.StartRotate();
+        }
+        if (other.gameObject.name == "wheel3" && Controller.GetHairTriggerDown())
+        {
+            w3.StartRotate();
         }
     }
 
