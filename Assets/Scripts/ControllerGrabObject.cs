@@ -48,16 +48,6 @@ public class ControllerGrabObject : MonoBehaviour {
 			if (collidingObject) {
 				GrabObject ();
 			}
-//            else {
-//              
-//                px += 5f;
-//                if (px > 5f)
-//                {
-//                    px = 0f;
-//                }
-//
-//				player.transform.position = new Vector3(px, 0f, 0f);
-//            }
 		}
 
 		if (Controller.GetHairTriggerUp ()) {
@@ -91,10 +81,20 @@ public class ControllerGrabObject : MonoBehaviour {
 	private void GrabObject()
 	{
 		objectInHand = collidingObject;
+        Debug.Log("grabing");
 		//set objectinhand parent to player
 		objectInHand.transform.parent = player.transform;
-		collidingObject = null;
+        Debug.Log(objectInHand.name);
+        if (objectInHand.GetComponent<FixedJoint>())
+        {
+            Debug.Log("has joint");
+            objectInHand.GetComponent<FixedJoint>().connectedBody = null;
+            Destroy(objectInHand.GetComponent<FixedJoint>());
+        }
 
+        collidingObject = null;
+
+        
 		var joint = AddFixedJoint ();
 		joint.connectedBody = objectInHand.GetComponent<Rigidbody> ();
 	}

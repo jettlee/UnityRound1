@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
-
+	public bool isActive;
 
     private GameObject player;
     private float px;
@@ -31,50 +31,45 @@ public class Clock : MonoBehaviour
 
     void Update()
     {
-        if (in_range)
-        {
-            if (Controller.GetHairTriggerDown())
-            {
-                //Debug.Log (gameObject.name + " Trigger Press");
-                Debug.Log("trigger");
-                px = player.transform.position.x;
-                if (direction == -1)
-                { //back
-                    Debug.Log("back");
-                    Debug.Log(px);
-                    if (px > 0f)
-                    {
-                        clockSound.playClockRotateSound();
-                        StartCoroutine(backMinRotate());
-                        StartCoroutine(backHourRotate());
-                        px -= 5f;
-                        Debug.Log(px);
-                        clockSound.playRoomChangeSound();
-                        player.transform.position = new Vector3(px, 0f, -0.3f);
-                    }
+		if (isActive) {
+			if (in_range) {
+				if (Controller.GetHairTriggerDown ()) {
+					//Debug.Log (gameObject.name + " Trigger Press");
+					Debug.Log ("trigger");
+					px = player.transform.position.x;
+					if (direction == -1) { //back
+						Debug.Log ("back");
+						Debug.Log (px);
+						if (px > 0f) {
+							clockSound.playClockRotateSound ();
+							StartCoroutine (backMinRotate ());
+							StartCoroutine (backHourRotate ());
+							px -= 5f;
+							Debug.Log (px);
+							clockSound.playRoomChangeSound ();
+							player.transform.position = new Vector3 (px, 0f, -0.3f);
+						}
 
-                }
-                else if (direction == 1)
-                { //forward
-                    Debug.Log("for");
+					} else if (direction == 1) { //forward
+						Debug.Log ("for");
 
-                    if (px < 20f)
-                    {
-                        clockSound.playClockRotateSound();
-                        StartCoroutine(forMinRotate());
-                        StartCoroutine(forHourRotate());
-                        px += 5f;
-                        Debug.Log(px);
-                        clockSound.playRoomChangeSound();
-                        player.transform.position = new Vector3(px, 0f, -0.3f);
-                    }
+						if (px < 20f) {
+							clockSound.playClockRotateSound ();
+							StartCoroutine (forMinRotate ());
+							StartCoroutine (forHourRotate ());
+							px += 5f;
+							Debug.Log (px);
+							clockSound.playRoomChangeSound ();
+							player.transform.position = new Vector3 (px, 0f, -0.3f);
+						}
 
-                }
-                //Debug.Log(px);
+					}
+					//Debug.Log(px);
 
 
-            }
-        }
+				}
+			}
+		}
 
     }
 

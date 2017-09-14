@@ -24,8 +24,24 @@ public class keyhole : MonoBehaviour {
             key.SetActive(true);
             GameObject drawer = GameObject.Find("drawer_withKeyHole");
             Drawer d = drawer.GetComponent<Drawer>();
+
+
+            //rotate:
+            StartCoroutine(Rotate());
+
             d.isLocked = false;
+
         }
 
+    }
+
+
+    IEnumerator Rotate()
+    {
+        for (int i = 0; i < 90; i++)
+        {
+            transform.Rotate(new Vector3(-1, 0, 0));
+            yield return 0;
+        }
     }
 }
