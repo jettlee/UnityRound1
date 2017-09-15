@@ -5,9 +5,9 @@ using UnityEngine;
 public class WheelRotate : MonoBehaviour {
 
 
-    public test w1;
-    public test w2;
-    public test w3;
+    public Wheel w1;
+    public Wheel w2;
+    public Wheel w3;
 
 
     private SteamVR_TrackedObject trackedObj;

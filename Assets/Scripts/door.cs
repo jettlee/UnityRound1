@@ -4,27 +4,26 @@ using UnityEngine;
 
 public class door : MonoBehaviour {
 
-    public GameObject w1;
-    public GameObject w2;
-    public GameObject w3;
+    public Wheel w1;
+    public Wheel w2;
+    public Wheel w3;
 
     public GameObject file;
 
-    // Use this for initialization
-    void Start () {
-        
+    Animator anim;
 
-
-
+    void Awake()
+    {
+        anim = GetComponent<Animator>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if(w1.GetComponent<test>().num == 3 && w1.GetComponent<test>().num == 3 && w1.GetComponent<test>().num == 3 )
+
+    void Update () {
+        if(w1.num == 3 && w2.num == 3 && w3.num == 3 )
         {
-           // GameObject file = GameObject.Find("importantFile");
             file.SetActive(true);
-            gameObject.SetActive(false);
+            anim.SetTrigger("open");
+            w1.num = w2.num = w3.num = 0;
+            //gameObject.SetActive(false);
         }
 
 	}
