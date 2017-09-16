@@ -8,8 +8,15 @@ public class ClockKeyhole : MonoBehaviour {
 	public Clock left;
 	public Clock right;
 
+    private static AudioSource audioSource;
 
-	void OnTriggerStay(Collider other)
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+
+    void OnTriggerStay(Collider other)
 	{
 		if (other.gameObject.name == "TimeClock-springKey" && other.transform.parent == null)
 		{
@@ -17,11 +24,14 @@ public class ClockKeyhole : MonoBehaviour {
 			clockKey.SetActive(true);
 
             StartCoroutine(Rotate());
+            AudioClip audioClip = Resources.Load<AudioClip>("activateclock");
+            audioSource.clip = audioClip;
+            audioSource.Play();
 
             left.isActive = true;
 			right.isActive = true;
 
-		}
+        }
 
 	}
 

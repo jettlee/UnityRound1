@@ -12,15 +12,9 @@ public class clockSound : MonoBehaviour {
 
     public static void playClockRotateSound()
     {
-        AudioClip audioClip = Resources.Load<AudioClip>("Clockgears");
+        AudioClip audioClip = Resources.Load<AudioClip>("rotateclock");
         audioSource.clip = audioClip;
         audioSource.Play();
     }
 
-    public static void playRoomChangeSound()
-    {
-        AudioClip audioClip = Resources.Load<AudioClip>("timetravel_shortened");
-        audioSource.clip = audioClip;
-        audioSource.Play();
-    }
 }

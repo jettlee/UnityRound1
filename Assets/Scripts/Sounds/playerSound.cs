@@ -13,14 +13,21 @@ public class playerSound : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        /*if (transform.position.x > 15 || transform.position.x <= 10)
-        {
-            audioSource.Stop();
-        }
-
-        if(transform.position.x == 15)
-        {
-            audioSource.Play();
-        }*/
 	}
+
+    public static void playMurderBGM()
+    {
+        AudioClip audioClip = Resources.Load<AudioClip>("12");
+        audioSource.clip = audioClip;
+        audioSource.Play();
+        audioSource.loop = true;
+    }
+
+    public static void playBackBGM()
+    {
+        AudioClip audioClip = Resources.Load<AudioClip>("8-9-10");
+        audioSource.clip = audioClip;
+        audioSource.Play();
+        audioSource.loop = true;
+    }
 }

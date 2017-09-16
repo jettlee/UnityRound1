@@ -5,22 +5,18 @@ using UnityEngine;
 public class ControllerGrabObject : MonoBehaviour {
 
 
-	private const string CLOCK_TAG = "Clock";
 	public static bool clockRotate = false;
 	private SteamVR_TrackedObject trackedObj;
-	private Quaternion currentMinQ;
-	private Quaternion firstMinQ;
-	private Quaternion currentHourQ;
-	private Quaternion firstHourQ;
-	public float speed = 1.0f;
-	private bool initialRotate = false;
+    public static bool doorLock = false;
+    public static bool inDoorArea = false;
+
 
 	private GameObject player;
 //    private float px;
 
 
-	private GameObject collidingObject;
-	private GameObject objectInHand;
+	public static GameObject collidingObject;
+	public static GameObject objectInHand;
 
 	private SteamVR_Controller.Device Controller
 	{
@@ -31,12 +27,12 @@ public class ControllerGrabObject : MonoBehaviour {
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
 		player = GameObject.Find("VR");
-//		px = player.transform.position.x;
+
 	}
 
 	private void SetCollidingObject(Collider col)
 	{	
-		if (collidingObject || !col.GetComponent<Rigidbody> () || col.tag != "Key")
+		if (collidingObject || !col.GetComponent<Rigidbody>())
 		{
 			return;
 		}
@@ -45,12 +41,17 @@ public class ControllerGrabObject : MonoBehaviour {
 
 	void Update () {
 		if (Controller.GetHairTriggerDown ()) {
+            if(inDoorArea)
+            {
+                doorLock = true;
+            }
 			if (collidingObject) {
 				GrabObject ();
 			}
 		}
 
 		if (Controller.GetHairTriggerUp ()) {
+            doorLock = false;
 			if (objectInHand) {
 				ReleaseObject ();
 			}
@@ -60,12 +61,20 @@ public class ControllerGrabObject : MonoBehaviour {
 
 	public void OnTriggerEnter(Collider other)
 	{
+        if(other.tag == "Door")
+        {
+            inDoorArea = true;
+        }
 		SetCollidingObject (other);
 	}
 
 	public void OnTriggerStay(Collider other)
 	{
-		SetCollidingObject (other);
+        if (other.tag == "Door")
+        {
+            inDoorArea = true;
+        }
+        SetCollidingObject (other);
 	}
 
 	public void OnTriggerExit(Collider other)
@@ -74,6 +83,11 @@ public class ControllerGrabObject : MonoBehaviour {
 		{
 			return;
 		}
+
+        if (inDoorArea)
+        {
+            inDoorArea = false;
+        }
 
 		collidingObject = null;
 	}
@@ -85,6 +99,11 @@ public class ControllerGrabObject : MonoBehaviour {
 		//set objectinhand parent to player
 		objectInHand.transform.parent = player.transform;
         Debug.Log(objectInHand.name);
+        if (objectInHand.name == "battery2")
+        {
+            Destroy(objectInHand.GetComponent<FixedJoint>());
+        }
+
         if (objectInHand.GetComponent<FixedJoint>())
         {
             Debug.Log("has joint");
