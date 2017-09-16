@@ -43,7 +43,7 @@ public class Clock : MonoBehaviour
 						Debug.Log ("back");
 						Debug.Log (px);
 						if (px > 0f) {
-                            if (px <= 10f)
+                            if (px <= 12f)
                             {
                                 playerSound.playBackBGM();
                                 cameraScript.script.saturation = 0.12f;
@@ -61,7 +61,7 @@ public class Clock : MonoBehaviour
 						Debug.Log ("for");
 
 						if (px < 20f) {
-                            if(px > 15f)
+                            if(px > 14f)
                             {
                                 playerSound.playMurderBGM();
                                 cameraScript.script.saturation = 1.0f;

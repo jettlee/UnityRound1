@@ -30,6 +30,7 @@ public class alarm : MonoBehaviour {
             battery_1.SetActive(true);
             AudioClip audioClip = Resources.Load<AudioClip>("pickup");
             audioSource.clip = audioClip;
+			audioSource.play ();
         }
         if (other.gameObject.name == "battery2" && other.transform.parent == null)
         {
@@ -38,13 +39,14 @@ public class alarm : MonoBehaviour {
             battery_2.SetActive(true);
             AudioClip audioClip = Resources.Load<AudioClip>("pickup");
             audioSource.clip = audioClip;
+			audioSource.play ();
         }
 
         if (battery_1.activeSelf && battery_2.activeSelf)
         {
             AudioClip audioClip = Resources.Load<AudioClip>("alarmclock");
             audioSource.clip = audioClip;
-
+			audioSource.play ();
             screen.GetComponent<Renderer>().material = m;
         }
     }

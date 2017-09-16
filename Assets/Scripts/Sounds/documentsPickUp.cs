@@ -22,8 +22,8 @@ public class documentsPickUp : MonoBehaviour {
     
     private void OnTriggerStay(Collider other)
     {
-        if (ControllerGrabObject.collidingObject.name == "prototype002" || ControllerGrabObject.collidingObject.name == "backUp" ||
-     ControllerGrabObject.collidingObject.name == "prototype001" || ControllerGrabObject.collidingObject.name == "theoryOfTime" || ControllerGrabObject.collidingObject.name == "importantFile")
+		if (!hasPick && ControllerGrabObject.objectInHand.name == "prototype002" || ControllerGrabObject.objectInHand.name == "backUp" ||
+			ControllerGrabObject.objectInHand.name == "prototype001" || ControllerGrabObject.objectInHand.name == "theoryOfTime" || ControllerGrabObject.objectInHand.name == "importantFile")
         {
             hasPick = true;
             AudioClip audioClip = Resources.Load<AudioClip>("documents");

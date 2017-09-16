@@ -24,7 +24,7 @@ public class keySound : MonoBehaviour {
     private void OnTriggerStay(Collider other)
     {
         Debug.Log("onCollision");
-        if (ControllerGrabObject.objectInHand.name == "TimeClock-springKey" && !hasPlay)
+		if (ControllerGrabObject.objectInHand.name == "TimeClock-springKey" || ControllerGrabObject.objectInHand.name == "key" && !hasPlay)
         {
             Debug.Log(ControllerGrabObject.collidingObject.name);
             Debug.Log("inCollision");

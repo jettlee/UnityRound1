@@ -9,12 +9,13 @@ public class Drawer : MonoBehaviour {
 	public float min;
 	public float max;
 
-    private static AudioSource audioSource;
 
+    private static AudioSource audioSource;
+	private AudioClip audioClip;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        AudioClip audioClip = Resources.Load<AudioClip>("opendrawer");
+        audioClip = Resources.Load<AudioClip>("opendrawer");
         audioSource.clip = audioClip;
 
     }
@@ -25,15 +26,9 @@ public class Drawer : MonoBehaviour {
 		} else {
             battery2.transform.parent = this.transform;
 			transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(transform.position.z, min, max));
+			audioSource.PlayOneShot (audioSource.clip);
 		}
 			
 	}
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (!isLocked)
-        {
-            audioSource.Play();
-        }
-    }
+		
 }

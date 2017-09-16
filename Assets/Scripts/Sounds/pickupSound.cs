@@ -21,7 +21,7 @@ public class pickupSound : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if (!hasPick && ControllerGrabObject.collidingObject.name == "myPhone" || ControllerGrabObject.collidingObject.name == "battery1" || ControllerGrabObject.collidingObject.name == "battery2")
+		if (!hasPick && ControllerGrabObject.objectInHand.name == "myPhone" || ControllerGrabObject.objectInHand.name == "battery1" || ControllerGrabObject.objectInHand.name == "battery2")
         {
             hasPick = true;
             AudioClip audioClip = Resources.Load<AudioClip>("pickup");
