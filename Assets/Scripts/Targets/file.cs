@@ -22,6 +22,16 @@ public class file : MonoBehaviour {
     public GameObject proto1_check;
     public GameObject proto2_check;
 
+    public HintManager hint;
+
+    void Update()
+    {
+
+        if (importantfile.activeSelf && backup.activeSelf && theory.activeSelf && proto2.activeSelf && proto1.activeSelf)
+        {
+            hint.file_done = true;
+        }
+    }
 
     void OnTriggerStay(Collider other)
     {

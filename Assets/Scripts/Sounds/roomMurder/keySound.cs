@@ -21,22 +21,22 @@ public class keySound : MonoBehaviour {
     }
 
 
-    private void OnTriggerStay(Collider other)
-    {
-        Debug.Log("onCollision");
-		if (ControllerGrabObject.objectInHand.name == "TimeClock-springKey" || ControllerGrabObject.objectInHand.name == "key" && !hasPlay)
-        {
-            Debug.Log(ControllerGrabObject.collidingObject.name);
-            Debug.Log("inCollision");
-            hasPlay = true;
-            audioSource.Play();
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    Debug.Log("onCollision");
+    //    if (ControllerGrabObject.objectInHand.name == "TimeClock-springKey" && !hasPlay)
+    //    {
+    //        Debug.Log(ControllerGrabObject.collidingObject.name);
+    //        Debug.Log("inCollision");
+    //        hasPlay = true;
+    //        audioSource.Play();
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        hasPlay = false;
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    hasPlay = false;
+    //}
 
 }
 

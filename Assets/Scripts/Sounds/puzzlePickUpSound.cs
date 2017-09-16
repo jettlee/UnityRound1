@@ -19,21 +19,21 @@ public class puzzlePickUpSound : MonoBehaviour {
     }
 
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (!hasPick && (ControllerGrabObject.collidingObject.name == "code2" || ControllerGrabObject.collidingObject.name == "code3" ||
-            ControllerGrabObject.collidingObject.name == "code4" || ControllerGrabObject.collidingObject.name == "code1"))
-        {
-            hasPick = true;
-            AudioClip audioClip = Resources.Load<AudioClip>("pickuppuzzle");
-            audioSource.clip = audioClip;
-            audioSource.Play();
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (!hasPick && (ControllerGrabObject.collidingObject.name == "code2" || ControllerGrabObject.collidingObject.name == "code3" ||
+    //        ControllerGrabObject.collidingObject.name == "code4" || ControllerGrabObject.collidingObject.name == "code1"))
+    //    {
+    //        hasPick = true;
+    //        AudioClip audioClip = Resources.Load<AudioClip>("pickuppuzzle");
+    //        audioSource.clip = audioClip;
+    //        audioSource.Play();
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        hasPick = false;
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    hasPick = false;
+    //}
 
 }

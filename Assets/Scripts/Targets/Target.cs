@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class Target : MonoBehaviour {
 
-	public Vector3 dest_pos;
-	public Vector3 dest_rot;
-	public string keyName;
+    public GameObject phone;
 
-    private static AudioSource audioSource;
+    public HintManager hint;
 
-    private void Awake()
+    private void Update()
     {
-        audioSource = GetComponent<AudioSource>();
+        if (phone.activeSelf)
+        {
+            hint.phone_done = true;
+        }
     }
 
     void OnTriggerStay(Collider other) {// will it always run?
-		if (other.gameObject.name == keyName && other.transform.parent == null) {
-			other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-			other.gameObject.transform.position = dest_pos; //Vector3.Lerp()
-			other.gameObject.transform.eulerAngles = dest_rot;
-            AudioClip audioClip = Resources.Load<AudioClip>("phonecharge");
-            audioSource.clip = audioClip;
-            audioSource.Play();
+        if (other.gameObject.name == "myPhone" && other.transform.parent == null)
+        {
+            other.gameObject.SetActive(false);
+            phone.SetActive(true);
         }
-	}
+    }
 }

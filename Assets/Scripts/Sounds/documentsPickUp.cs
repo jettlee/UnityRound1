@@ -20,20 +20,20 @@ public class documentsPickUp : MonoBehaviour {
 
 
     
-    private void OnTriggerStay(Collider other)
-    {
-		if (!hasPick && ControllerGrabObject.objectInHand.name == "prototype002" || ControllerGrabObject.objectInHand.name == "backUp" ||
-			ControllerGrabObject.objectInHand.name == "prototype001" || ControllerGrabObject.objectInHand.name == "theoryOfTime" || ControllerGrabObject.objectInHand.name == "importantFile")
-        {
-            hasPick = true;
-            AudioClip audioClip = Resources.Load<AudioClip>("documents");
-            audioSource.clip = audioClip;
-            audioSource.Play();
-        }
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (ControllerGrabObject.collidingObject.name == "prototype002" || ControllerGrabObject.collidingObject.name == "backUp" ||
+    // ControllerGrabObject.collidingObject.name == "prototype001" || ControllerGrabObject.collidingObject.name == "theoryOfTime" || ControllerGrabObject.collidingObject.name == "importantFile")
+    //    {
+    //        hasPick = true;
+    //        AudioClip audioClip = Resources.Load<AudioClip>("documents");
+    //        audioSource.clip = audioClip;
+    //        audioSource.Play();
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        hasPick = false;
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    hasPick = false;
+    //}
 }

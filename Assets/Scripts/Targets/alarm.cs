@@ -9,6 +9,8 @@ public class alarm : MonoBehaviour {
     public GameObject screen;
     public Material m;
 
+    public HintManager hint;
+
     private static AudioSource audioSource;
     // Use this for initialization
     void Awake () {
@@ -18,7 +20,11 @@ public class alarm : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        if(battery_1.activeSelf && battery_2.activeSelf)
+        {
+            hint.alarm_done = true;
+        }
 	}
 
     void OnTriggerStay(Collider other)
@@ -30,7 +36,6 @@ public class alarm : MonoBehaviour {
             battery_1.SetActive(true);
             AudioClip audioClip = Resources.Load<AudioClip>("pickup");
             audioSource.clip = audioClip;
-			audioSource.play ();
         }
         if (other.gameObject.name == "battery2" && other.transform.parent == null)
         {
@@ -39,14 +44,13 @@ public class alarm : MonoBehaviour {
             battery_2.SetActive(true);
             AudioClip audioClip = Resources.Load<AudioClip>("pickup");
             audioSource.clip = audioClip;
-			audioSource.play ();
         }
 
         if (battery_1.activeSelf && battery_2.activeSelf)
         {
             AudioClip audioClip = Resources.Load<AudioClip>("alarmclock");
             audioSource.clip = audioClip;
-			audioSource.play ();
+
             screen.GetComponent<Renderer>().material = m;
         }
     }

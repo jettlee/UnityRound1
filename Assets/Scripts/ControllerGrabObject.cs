@@ -12,11 +12,11 @@ public class ControllerGrabObject : MonoBehaviour {
 
 
 	private GameObject player;
-//    private float px;
+    //    private float px;
 
 
-	public static GameObject collidingObject;
-	public static GameObject objectInHand;
+    private GameObject collidingObject;
+    private GameObject objectInHand;
 
 	private SteamVR_Controller.Device Controller
 	{
@@ -98,11 +98,11 @@ public class ControllerGrabObject : MonoBehaviour {
         Debug.Log("grabing");
 		//set objectinhand parent to player
 		objectInHand.transform.parent = player.transform;
-        Debug.Log(objectInHand.name);
-        if (objectInHand.name == "battery2")
-        {
-            Destroy(objectInHand.GetComponent<FixedJoint>());
-        }
+        //Debug.Log(objectInHand.name);
+        //if (objectInHand.name == "battery2")
+        //{
+        //    Destroy(objectInHand.GetComponent<FixedJoint>());
+        //}
 
         if (objectInHand.GetComponent<FixedJoint>())
         {

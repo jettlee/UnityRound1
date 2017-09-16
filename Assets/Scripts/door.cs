@@ -22,7 +22,7 @@ public class door : MonoBehaviour {
     }
 
     void Update () {
-        if(w1.num == 3 && w2.num == 3 && w3.num == 3 )
+        if(w1.num == 5 && w2.num == 6 && w3.num == 3 )
         {
             file.SetActive(true);
             anim.SetTrigger("open");

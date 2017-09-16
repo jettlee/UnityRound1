@@ -17,14 +17,14 @@ public class drawerKeySound : MonoBehaviour {
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (ControllerGrabObject.collidingObject != null)
-        {
-            AudioClip audioClip = Resources.Load<AudioClip>("key");
-            audioSource.clip = audioClip;
-            audioSource.Play();
-        }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (ControllerGrabObject.collidingObject != null)
+    //    {
+    //        AudioClip audioClip = Resources.Load<AudioClip>("key");
+    //        audioSource.clip = audioClip;
+    //        audioSource.Play();
+    //    }
    
-    }
+    //}
 }
