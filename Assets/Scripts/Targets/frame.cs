@@ -14,8 +14,6 @@ public class frame : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         audioSource = GetComponent<AudioSource>();
-        AudioClip audioClip = Resources.Load<AudioClip>("putdownpuzzle");
-        audioSource.clip = audioClip;
     }
 	
 	// Update is called once per frame

@@ -43,16 +43,17 @@ public class Clock : MonoBehaviour
 						Debug.Log ("back");
 						Debug.Log (px);
 						if (px > 0f) {
-                            if (px <= 10f)
-                            {
-                                playerSound.playBackBGM();
-                                cameraScript.script.saturation = 0.12f;
-                            }
+                            
 							clockSound.playClockRotateSound ();
 							StartCoroutine (backMinRotate ());
 							StartCoroutine (backHourRotate ());
 							px -= 5f;
-							Debug.Log (px);
+                            if (px <= 17f)
+                            {
+                                playerSound.playBackBGM();
+                                cameraScript.script.saturation = 0.12f;
+                            }
+                            Debug.Log (px);
                             clock.transform.parent = player.transform;
                             player.transform.position = new Vector3 (px, 0f, -0.3f);
 						}
@@ -61,17 +62,18 @@ public class Clock : MonoBehaviour
 						Debug.Log ("for");
 
 						if (px < 20f) {
-                            if(px > 15f)
+                            
+							clockSound.playClockRotateSound ();
+							StartCoroutine (forMinRotate ());
+							StartCoroutine (forHourRotate ());
+							px += 5f;
+                            if (px > 16f)
                             {
                                 playerSound.playMurderBGM();
                                 cameraScript.script.saturation = 1.0f;
 
                             }
-							clockSound.playClockRotateSound ();
-							StartCoroutine (forMinRotate ());
-							StartCoroutine (forHourRotate ());
-							px += 5f;
-							Debug.Log (px);
+                            Debug.Log (px);
                             clock.transform.parent = player.transform;
                             player.transform.position = new Vector3 (px, 0f, -0.3f);
 						}

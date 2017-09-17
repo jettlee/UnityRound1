@@ -14,20 +14,6 @@ public class doorSound : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
 
-    }
-
-
-    private void OnTriggerStay(Collider other)
-    {
-        Debug.Log("door trigger");
-        if (ControllerGrabObject.doorLock)
-        {
-            Debug.Log("in door trigger");
-            audioSource.Play();
-        }
-    }
 
 }

@@ -62,7 +62,8 @@ public class HintManager : MonoBehaviour {
         {
             if(phone_done)
             {
-                //audio
+                //AudioSource audioSource = GameObject.Find("charger").GetComponent<AudioSource>();
+                //audioSource.Play();
                 Debug.Log("status 2 phone done");
                 alarm_hint.SetActive(false);
                 file_hint.SetActive(false);

@@ -7,8 +7,6 @@ public class ControllerGrabObject : MonoBehaviour {
 
 	public static bool clockRotate = false;
 	private SteamVR_TrackedObject trackedObj;
-    public static bool doorLock = false;
-    public static bool inDoorArea = false;
 
 
 	private GameObject player;
@@ -17,6 +15,9 @@ public class ControllerGrabObject : MonoBehaviour {
 
     private GameObject collidingObject;
     private GameObject objectInHand;
+
+    private static AudioSource audioSource;
+    private bool hasPlay = false;
 
 	private SteamVR_Controller.Device Controller
 	{
@@ -41,17 +42,14 @@ public class ControllerGrabObject : MonoBehaviour {
 
 	void Update () {
 		if (Controller.GetHairTriggerDown ()) {
-            if(inDoorArea)
-            {
-                doorLock = true;
-            }
+            
 			if (collidingObject) {
 				GrabObject ();
 			}
 		}
 
 		if (Controller.GetHairTriggerUp ()) {
-            doorLock = false;
+         
 			if (objectInHand) {
 				ReleaseObject ();
 			}
@@ -61,19 +59,13 @@ public class ControllerGrabObject : MonoBehaviour {
 
 	public void OnTriggerEnter(Collider other)
 	{
-        if(other.tag == "Door")
-        {
-            inDoorArea = true;
-        }
+
 		SetCollidingObject (other);
 	}
 
 	public void OnTriggerStay(Collider other)
 	{
-        if (other.tag == "Door")
-        {
-            inDoorArea = true;
-        }
+
         SetCollidingObject (other);
 	}
 
@@ -84,10 +76,6 @@ public class ControllerGrabObject : MonoBehaviour {
 			return;
 		}
 
-        if (inDoorArea)
-        {
-            inDoorArea = false;
-        }
 
 		collidingObject = null;
 	}
@@ -98,6 +86,15 @@ public class ControllerGrabObject : MonoBehaviour {
         Debug.Log("grabing");
 		//set objectinhand parent to player
 		objectInHand.transform.parent = player.transform;
+
+        Debug.Log(objectInHand.name);
+        audioSource = GameObject.Find(objectInHand.name).GetComponent<AudioSource>();
+        if (audioSource && !hasPlay)
+        {
+            hasPlay = true;
+            audioSource.Play();
+        }
+        
         //Debug.Log(objectInHand.name);
         //if (objectInHand.name == "battery2")
         //{
@@ -140,6 +137,7 @@ public class ControllerGrabObject : MonoBehaviour {
 		//detach from parent
 		objectInHand.transform.parent = null;
 		objectInHand = null;
+        hasPlay = false;
 	}
 		
 }

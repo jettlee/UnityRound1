@@ -12,12 +12,9 @@ public class Wheel : MonoBehaviour {
     public int num = 1;
     float speed = 10f;
 
-    private static AudioSource audioSource;
-
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
     }
     void Start()
     {
@@ -35,7 +32,7 @@ public class Wheel : MonoBehaviour {
 		}   
 
 		targetAngle = new Vector3((num-1) * 45f - 90f, 0f, -180f);
-		Debug.Log(num);
+		//Debug.Log(num);
 	}
 
     public void Update()
@@ -60,9 +57,6 @@ public class Wheel : MonoBehaviour {
             
             if(transform.eulerAngles == targetAngle)
             {
-                AudioClip audioClip = Resources.Load<AudioClip>("safebox_numberlock");
-                audioSource.clip = audioClip;
-                audioSource.Play();
                 rotating = false;
             }
         }

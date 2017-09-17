@@ -10,6 +10,7 @@ public class alarm : MonoBehaviour {
     public Material m;
 
     public HintManager hint;
+    private bool hasAlarm = false;
 
     private static AudioSource audioSource;
     // Use this for initialization
@@ -36,6 +37,7 @@ public class alarm : MonoBehaviour {
             battery_1.SetActive(true);
             AudioClip audioClip = Resources.Load<AudioClip>("pickup");
             audioSource.clip = audioClip;
+            audioSource.Play();
         }
         if (other.gameObject.name == "battery2" && other.transform.parent == null)
         {
@@ -44,12 +46,15 @@ public class alarm : MonoBehaviour {
             battery_2.SetActive(true);
             AudioClip audioClip = Resources.Load<AudioClip>("pickup");
             audioSource.clip = audioClip;
+            audioSource.Play();
         }
 
-        if (battery_1.activeSelf && battery_2.activeSelf)
+        if (!hasAlarm && battery_1.activeSelf && battery_2.activeSelf)
         {
+            hasAlarm = true;
             AudioClip audioClip = Resources.Load<AudioClip>("alarmclock");
             audioSource.clip = audioClip;
+            audioSource.Play();
 
             screen.GetComponent<Renderer>().material = m;
         }

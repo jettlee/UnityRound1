@@ -7,14 +7,6 @@ public class SecretDoor: MonoBehaviour {
 	public float min;
 	public float max;
 
-    private static AudioSource audioSource;
-
-    private void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-        AudioClip audioClip = Resources.Load<AudioClip>("secretdoor");
-        audioSource.clip = audioClip;
-    }
 
     void Update () {
 		//transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(transform.position.z, min, max));
@@ -22,6 +14,5 @@ public class SecretDoor: MonoBehaviour {
 			transform.rotation.y,
 			Mathf.Clamp(transform.position.z, min, max),
 			transform.rotation.w);
-        audioSource.Play();
 	}
 }
