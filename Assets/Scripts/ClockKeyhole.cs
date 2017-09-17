@@ -8,10 +8,15 @@ public class ClockKeyhole : MonoBehaviour {
 	public Clock left;
 	public Clock right;
 
+    private GameObject clock;
+    public static bool isActive = false;
+    public Material texture12;
+
     private static AudioSource audioSource;
 
     private void Awake()
     {
+        clock = GameObject.Find("TimeClockInterface");
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -30,6 +35,8 @@ public class ClockKeyhole : MonoBehaviour {
 
             left.isActive = true;
 			right.isActive = true;
+            clock.GetComponent<Renderer>().material = texture12;
+            isActive = true;
 
         }
 

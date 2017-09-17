@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Clock : MonoBehaviour
 {
@@ -44,7 +46,7 @@ public class Clock : MonoBehaviour
 					if (direction == -1) { //back
 						Debug.Log ("back");
 						Debug.Log (px);
-						if (px > 0f || HintManager.status != 3) { //make sure when status == 3, guest can't travel back
+						if (px > 0f && HintManager.status != 3) { //make sure when status == 3, guest can't travel back
                             
 							clockSound.playClockRotateSound ();
 							StartCoroutine (backMinRotate ());
@@ -70,26 +72,37 @@ public class Clock : MonoBehaviour
 							StartCoroutine (forMinRotate ());
 							StartCoroutine (forHourRotate ());
 							time++;
-							if (HintManager.status != 3) 
-							{
-								px += 5f;
-							}
-
-							if (px > 16f || HintManager.status == 3)
+                            if (HintManager.status != 3 || px < 13f)
                             {
-								cameraScript.script.saturation = 1.0f;
-
-								if (HintManager.status != 3)
-								{
-									playerSound.playMurderBGM();
-								}
-                                
-								if (HintManager.status == 3) 
-								{
-									clockDone = true;
-								}
-
+                                px += 5f;
                             }
+
+                            if(time == 12)
+                            {
+                                if (HintManager.status != 3)
+                                {
+                                    playerSound.playMurderBGM();
+                                }
+                                else
+                                {
+                                    //play new audio;
+                                }
+                                cameraScript.script.saturation = 1.0f;
+                            }
+
+                            if (time == 13)
+                            {
+                                SceneManager.LoadScene("Ending");
+                            }
+							//if (px > 13f && HintManager.status == 3)
+       //                     {
+                                
+							//	if (HintManager.status == 3) 
+							//	{
+							//		clockDone = true;
+							//	}
+       //                     }
+
                             Debug.Log (px);
                             clock.transform.parent = player.transform;
                             player.transform.position = new Vector3 (px, 0f, -0.3f);

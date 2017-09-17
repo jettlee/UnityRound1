@@ -25,6 +25,7 @@ public class HintManager : MonoBehaviour {
 
 
 
+
     // Use this for initialization
     void Start () {
         status = 0;
@@ -32,7 +33,7 @@ public class HintManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(status == 0)
+        if (status == 0)
         {
             if(alarm_done)
             {
@@ -77,27 +78,24 @@ public class HintManager : MonoBehaviour {
             }
         }
 
-		if (status == 3) 
-		{
-			if (!Clock.clockDone) 
-			{
-				alarm_hint.SetActive(false);
-				file_hint.SetActive(false);
-				phone_hint.SetActive(false);
-				leave_hint.SetActive(false);
+        if (status == 3 && Clock.time == 12)
+        {
+
+            alarm_hint.SetActive(false);
+            file_hint.SetActive(false);
+            phone_hint.SetActive(false);
+            leave_hint.SetActive(false);
 
 
-				currentTime += Time.deltaTime;
-				if (currentTime > 7.0f) 
-				{
-					//play knock audio
-					currentTime = -1000000f;
+            currentTime += Time.deltaTime;
+            if (currentTime > 7.0f && Clock.time == 12)
+            {
+                //play knock audio
+                currentTime = -1000000f;
 
-					//if audio is not playing
-					SceneManager.LoadScene("Ending");
-				}
-			}
-
-		}
-	}
+                //if audio is not playing
+                SceneManager.LoadScene("Ending");
+            }
+        }
+    }
 }
