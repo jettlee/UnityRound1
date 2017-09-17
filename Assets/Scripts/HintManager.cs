@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HintManager : MonoBehaviour {
 
-    int status;
+    public static int status;
     //0 - alarm
     //1 - file
     //2 - phone
@@ -17,6 +18,9 @@ public class HintManager : MonoBehaviour {
     public GameObject file_hint;
     public GameObject phone_hint;
     public GameObject leave_hint;
+
+	private float currentTime = 0.0f;
+
 
 
 
@@ -73,5 +77,27 @@ public class HintManager : MonoBehaviour {
             }
         }
 
+		if (status == 3) 
+		{
+			if (!Clock.clockDone) 
+			{
+				alarm_hint.SetActive(false);
+				file_hint.SetActive(false);
+				phone_hint.SetActive(false);
+				leave_hint.SetActive(false);
+
+
+				currentTime += Time.deltaTime;
+				if (currentTime > 7.0f) 
+				{
+					//play knock audio
+					currentTime = -1000000f;
+
+					//if audio is not playing
+					SceneManager.LoadScene("Ending");
+				}
+			}
+
+		}
 	}
 }

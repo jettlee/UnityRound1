@@ -28,7 +28,6 @@ public class ControllerGrabObject : MonoBehaviour {
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject> ();
 		player = GameObject.Find("VR");
-
 	}
 
 	private void SetCollidingObject(Collider col)
@@ -41,6 +40,7 @@ public class ControllerGrabObject : MonoBehaviour {
 	}
 
 	void Update () {
+		
 		if (Controller.GetHairTriggerDown ()) {
             
 			if (collidingObject) {

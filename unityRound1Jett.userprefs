@@ -1,0 +1,20 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Sounds/clockSound.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Sounds/pickupSound.cs" Line="24" Column="52" />
+      <File FileName="Assets/Scripts/Targets/Drawer.cs" Line="33" Column="3" />
+      <File FileName="Assets/Scripts/Sounds/documentsPickUp.cs" Line="26" Column="97" />
+      <File FileName="Assets/Scripts/Targets/alarm.cs" Line="49" Column="24" />
+      <File FileName="Assets/Scripts/SecretDoor.cs" Line="8" Column="19" />
+      <File FileName="Assets/Scripts/Wheel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/door.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Sounds/clockSound.cs" Line="13" Column="44" />
+      <File FileName="Assets/Scripts/Clock.cs" Line="70" Column="39" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

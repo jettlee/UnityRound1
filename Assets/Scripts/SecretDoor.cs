@@ -14,5 +14,6 @@ public class SecretDoor: MonoBehaviour {
 			transform.rotation.y,
 			Mathf.Clamp(transform.position.z, min, max),
 			transform.rotation.w);
+
 	}
 }
