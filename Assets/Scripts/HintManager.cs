@@ -18,8 +18,9 @@ public class HintManager : MonoBehaviour {
     public GameObject file_hint;
     public GameObject phone_hint;
     public GameObject leave_hint;
+    public GameObject roomEnding;
+    public GameObject roomMurder;
 
-	private float currentTime = 0.0f;
 
 
 
@@ -75,27 +76,29 @@ public class HintManager : MonoBehaviour {
                 phone_hint.SetActive(false);
                 leave_hint.SetActive(true);
                 status = 3;
+                roomMurder.SetActive(false);
+                roomEnding.SetActive(true);
             }
         }
 
-        if (status == 3 && Clock.time == 12)
-        {
+        //if (status == 3 && Clock.time == 12)
+        //{
 
-            alarm_hint.SetActive(false);
-            file_hint.SetActive(false);
-            phone_hint.SetActive(false);
-            leave_hint.SetActive(false);
+        //    alarm_hint.SetActive(false);
+        //    file_hint.SetActive(false);
+        //    phone_hint.SetActive(false);
+        //    leave_hint.SetActive(false);
 
 
-            currentTime += Time.deltaTime;
-            if (currentTime > 7.0f && Clock.time == 12)
-            {
-                //play knock audio
-                currentTime = -1000000f;
+        //    currentTime += Time.deltaTime;
+        //    if (currentTime > 7.0f && Clock.time == 12)
+        //    {
+        //        //play knock audio
+        //        currentTime = -1000000f;
 
-                //if audio is not playing
-                SceneManager.LoadScene("Ending");
-            }
-        }
+        //        //if audio is not playing
+        //        SceneManager.LoadScene("Ending");
+        //    }
+        //}
     }
 }

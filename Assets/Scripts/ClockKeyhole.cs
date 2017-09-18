@@ -8,15 +8,19 @@ public class ClockKeyhole : MonoBehaviour {
 	public Clock left;
 	public Clock right;
 
-    private GameObject clock;
+    private GameObject clockInterface;
     public static bool isActive = false;
     public Material texture12;
+    public GameObject hint;
+
+    Animator animator;
 
     private static AudioSource audioSource;
 
     private void Awake()
     {
-        clock = GameObject.Find("TimeClockInterface");
+        animator = GameObject.Find("timeClock").GetComponent<Animator>();
+        clockInterface = GameObject.Find("TimeClockInterface");
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -32,11 +36,15 @@ public class ClockKeyhole : MonoBehaviour {
             AudioClip audioClip = Resources.Load<AudioClip>("activateclock");
             audioSource.clip = audioClip;
             audioSource.Play();
+            animator.SetBool("activation", true);
+            StartCoroutine(waitAndActive());
 
-            left.isActive = true;
-			right.isActive = true;
-            clock.GetComponent<Renderer>().material = texture12;
-            isActive = true;
+
+            //         left.isActive = true;
+            //right.isActive = true;
+            //         hint.SetActive(true);
+            //         clock.GetComponent<Renderer>().material = texture12;
+            //         isActive = true;
 
         }
 
@@ -49,5 +57,19 @@ public class ClockKeyhole : MonoBehaviour {
             transform.Rotate(new Vector3(-1, 0, 0));
             yield return 0;
         }
+    }
+
+    IEnumerator waitAndActive() 
+    {
+        yield return new WaitForSeconds(5);
+        animator.SetBool("activation", false);
+        animator.StopPlayback();
+        yield return new WaitForSeconds(3);
+        animator.enabled = false;
+        left.isActive = true;
+        right.isActive = true;
+        hint.SetActive(true);
+        clockInterface.GetComponent<Renderer>().material = texture12;
+        isActive = true;
     }
 }
